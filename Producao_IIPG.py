@@ -7,7 +7,7 @@ import requests
 from io import BytesIO
 
 # URL do arquivo XLSX no GitHub
-url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/ProducaoIIPG.xlsx'
+url = 'https://https://github.com/JacoLucas/ProducaoIIPG/blob/main/Produ%C3%A7%C3%A3o%20IIPG.xlsx'
 
 # Lê os dados da planilha Excel a partir do GitHub
 response = requests.get(url)
