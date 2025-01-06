@@ -7,20 +7,17 @@ import requests
 from io import BytesIO
 
 # URL do arquivo XLSX no GitHub
-url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/Produção IIPG.xlsx'
+url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/ProducaoIIPG.xlsx'
 
 # Lê os dados da planilha Excel a partir do GitHub
 response = requests.get(url)
 df = pd.read_excel(BytesIO(response.content), sheet_name='Para Código')
 
 # Verifique os nomes das colunas
-print(df.columns)
-
-# Remova espaços em branco dos nomes das colunas
 df.columns = df.columns.str.strip()
 
 # Converte a coluna 'Dias' para o formato de data
-df['Dias'] = pd.to_datetime(df['Dias'], format='%d/%m/%Y')  # Ajuste o formato de data conforme necessário
+df['Dias'] = pd.to_datetime(df['Dias'], format='%d/%m/%Y')
 
 # Extrai ano e mês dos dados
 df['Ano_Mes'] = df['Dias'].dt.to_period('M')
@@ -36,6 +33,7 @@ df.rename(columns={
 # Inicializa o aplicativo Dash
 app = dash.Dash(__name__)
 app.title = 'Produção IIPG'
+server = app.server  # Adicionar esta linha
 
 app.layout = html.Div([
     html.H1('Produção IIPG'),
@@ -167,4 +165,4 @@ def update_charts(selected_month, selected_unit):
     return fig_line, fig_bar, fig_pie, fig_usa_uss
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)  # Alterar debug para False
