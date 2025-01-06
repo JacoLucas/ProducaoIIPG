@@ -1,1 +1,1 @@
-web: gunicorn Producao_IIPG:app
+web: gunicorn app:Producao_IIPG
