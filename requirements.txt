@@ -1,4 +1,4 @@
 dash
-dash.dependencies
 pandas
 plotly.express
+requests
