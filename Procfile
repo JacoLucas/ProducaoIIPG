@@ -1,1 +1,1 @@
-web: gunicorn Producao_IIPG:app
+web: python Producao_IIPG.py
