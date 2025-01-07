@@ -170,4 +170,4 @@ def update_charts(selected_month, selected_unit):
     return fig_line, fig_bar, fig_pie, fig_usa_uss
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8050)))
