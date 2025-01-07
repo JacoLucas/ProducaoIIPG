@@ -129,7 +129,7 @@ def update_charts(selected_month, selected_unit):
         bar_df,
         values='Produção (ton.)',
         names='Material',
-        title='Distribuição da Produção de Materiais',
+        title='Distribuição de Materiais',
         color='Material',
         color_discrete_map=color_map
     )
