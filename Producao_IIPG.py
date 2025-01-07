@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 from io import BytesIO
+import os
 
 # URL do arquivo XLSX no GitHub
 url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/Produção IIPG.xlsx'
@@ -169,5 +170,6 @@ def update_charts(selected_month, selected_unit):
     
     return fig_line, fig_bar, fig_pie, fig_usa_uss
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
