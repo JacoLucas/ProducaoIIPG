@@ -42,7 +42,7 @@ app = dash.Dash(__name__)
 app.title = 'Produção IIPG'
 
 app.layout = html.Div([
-    html.H1('Produção IIPG'),
+    html.H1('Produção IIPG - Inst. Ind. Ponta Grossa'),
     html.Div([
         html.Label('Selecione o Período:'),
         dcc.Dropdown(
@@ -59,7 +59,7 @@ app.layout = html.Div([
         dcc.Graph(id='pie-chart', style={'width': '40%', 'display': 'inline-block'})
     ]),
     html.Div([
-        html.H2('Produção USA e USS'),
+        html.H2('Produção das Usinas de Asfalto e de Solos'),
         html.Div([
             html.Label('Selecione a Usina:'),
             dcc.Dropdown(
