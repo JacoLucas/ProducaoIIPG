@@ -127,7 +127,7 @@ def update_charts(selected_month, selected_unit):
     fig_bar.update_layout(
         xaxis_title='Produção (ton.)',
         yaxis_title='Material',
-        showlegend=False
+        showlegend=False,
         yaxis= dict(
         tickfont= dict(size=14))
     )
