@@ -128,6 +128,8 @@ def update_charts(selected_month, selected_unit):
         xaxis_title='Produção (ton.)',
         yaxis_title='Material',
         showlegend=False
+        yaxis= dict(
+        tickfont= dict(size=14))
     )
     
     # Gráfico de pizza
