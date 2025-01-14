@@ -173,7 +173,8 @@ def update_charts(selected_month, selected_unit):
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='BGTC'))
     fig_usa_uss.update_layout(
         xaxis_title='Período',
-        yaxis_title='Produção (ton.)'
+        yaxis_title='Produção (ton.)',
+        legend_font_size=14
     )
     
     return fig_line, fig_bar, fig_pie, fig_usa_uss
