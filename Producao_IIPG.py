@@ -96,7 +96,13 @@ def update_charts(selected_month, selected_unit):
     }
     
     # Gráfico de linha
-    fig_line = px.line(filtered_df, x='Dias', y='Produção Primário', title='Sistema Primário', line_shape='linear')
+    fig_line = px.line(
+        filtered_df, 
+        x='Dias', 
+        y='Produção Primário', 
+        title='Sistema Primário - Britagem', 
+        line_shape='linear'
+    )
     fig_line.update_traces(line=dict(color='#006699'))
     fig_line.update_layout(
         xaxis_title='Período',
@@ -114,7 +120,7 @@ def update_charts(selected_month, selected_unit):
         x='Produção (ton.)',
         y='Material',
         orientation='h',
-        title='Sistema Secundário',
+        title='Sistema Secundário - Rebritagem',
         color='Material',
         color_discrete_map=color_map
     )
