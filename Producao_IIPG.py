@@ -5,7 +5,6 @@ import pandas as pd
 import plotly.express as px
 import requests
 from io import BytesIO
-import os
 
 # URL do arquivo XLSX no GitHub
 url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/Produção IIPG.xlsx'
@@ -52,14 +51,19 @@ app.layout = html.Div([
         )
     ], style={'width': '33%', 'display': 'inline-block', 'margin-bottom': '20px'}),
     html.Div([
+        html.H2('Sistema Primário - Britagem'),
         dcc.Graph(id='line-chart', style={'width': '100%', 'display': 'inline-block'})
     ]),
     html.Div([
+        html.H2('Sistema Secundário - Rebritagem'),
         dcc.Graph(id='bar-chart', style={'width': '60%', 'display': 'inline-block'}),
         dcc.Graph(id='pie-chart', style={'width': '40%', 'display': 'inline-block'})
     ]),
     html.Div([
-        html.H2('Produção das Usinas de Asfalto e de Solos'),
+        dcc.Graph(id='line2-chart', style={'width': '95%', 'display': 'inline-block', 'margin': 'auto'})
+    ]),
+    html.Div([
+        html.H2('Produção USA e USS'),
         html.Div([
             html.Label('Selecione a Usina:'),
             dcc.Dropdown(
@@ -72,7 +76,7 @@ app.layout = html.Div([
                 clearable=False
             )
         ], style={'width': '33%', 'margin-bottom': '20px'}),
-        dcc.Graph(id='usa-uss-chart', style={'width': '100%', 'display': 'inline-block'})
+        dcc.Graph(id='usa-uss-chart', style={'width': '95%', 'display': 'inline-block'})
     ], style={'margin-top': '20px'})
 ])
 
@@ -80,6 +84,7 @@ app.layout = html.Div([
     [Output('line-chart', 'figure'),
      Output('bar-chart', 'figure'),
      Output('pie-chart', 'figure'),
+     Output('line2-chart', 'figure'),
      Output('usa-uss-chart', 'figure')],
     [Input('month-dropdown', 'value'),
      Input('unit-dropdown', 'value')]
@@ -95,12 +100,12 @@ def update_charts(selected_month, selected_unit):
         'Brita 2': '#FFCC00'
     }
     
-    # Gráfico de linha
+    # Gráfico de linha primário
     fig_line = px.line(
         filtered_df, 
         x='Dias', 
         y='Produção Primário', 
-        title='Sistema Primário - Britagem', 
+        title=f'Produção Diária - {selected_month}', 
         line_shape='linear'
     )
     fig_line.update_traces(line=dict(color='#006699'))
@@ -115,21 +120,21 @@ def update_charts(selected_month, selected_unit):
         'Produção (ton.)': filtered_df[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']].sum().values
     }
     bar_df = pd.DataFrame(data)
+    print('bar_df\n', bar_df)
+
     fig_bar = px.bar(
         bar_df,
         x='Produção (ton.)',
         y='Material',
         orientation='h',
-        title='Sistema Secundário - Rebritagem',
+        title=f'Produção Mensal - {selected_month}',
         color='Material',
         color_discrete_map=color_map
     )
     fig_bar.update_layout(
         xaxis_title='Produção (ton.)',
         yaxis_title='Material',
-        showlegend=False,
-        yaxis= dict(
-        tickfont= dict(size=14))
+        showlegend=False
     )
     
     # Gráfico de pizza
@@ -145,6 +150,32 @@ def update_charts(selected_month, selected_unit):
         showlegend=False,
         hoverinfo='label+percent+value'
     )
+
+    # Criando o dataframe line2_df
+    line2_df = pd.concat([filtered_df['Dias'], df[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']]], axis=1)
+
+    # Transformando o DataFrame para um formato longo
+    melted_line2_df = line2_df.melt(id_vars=['Dias'], value_vars=['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2'], 
+                                    var_name='Material', value_name='Produção (ton.)')
+
+    # Verifica o DataFrame resultante
+    print('melted_line2_df\n', melted_line2_df)
+
+    # Criando o gráfico de linha
+    fig_line2 = px.line(
+        melted_line2_df, 
+        x='Dias', 
+        y='Produção (ton.)', 
+        color='Material',
+        title=f'Produção Diária - {selected_month}', 
+        line_shape='linear', 
+        color_discrete_map=color_map
+    )
+    fig_line2.update_layout(
+        xaxis_title='Período',
+        yaxis_title='Produção (ton.)',
+        legend_font_size=14
+    )
     
     # Gráfico de linha para USA e USS
     if selected_unit == 'USA':
@@ -154,7 +185,7 @@ def update_charts(selected_month, selected_unit):
             x='Dias',
             y='Produção (ton.)',
             color='Material',
-            title='Produção USA e USS',
+            title=f'Produção Diária - USA {selected_month}',
             labels={'value': 'Produção (ton.)', 'variable': 'Material'}
         )
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='CBUQ'))
@@ -166,7 +197,7 @@ def update_charts(selected_month, selected_unit):
             x='Dias',
             y='Produção (ton.)',
             color='Material',
-            title='Produção USA e USS',
+            title=f'Produção Diária - USS {selected_month}',
             labels={'value': 'Produção (ton.)', 'variable': 'Material'}
         )
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='BGS'))
@@ -177,8 +208,7 @@ def update_charts(selected_month, selected_unit):
         legend_font_size=14
     )
     
-    return fig_line, fig_bar, fig_pie, fig_usa_uss
+    return fig_line, fig_bar, fig_pie, fig_line2, fig_usa_uss
 
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+if __name__ == '__main__':
+    app.run_server(debug=True)
