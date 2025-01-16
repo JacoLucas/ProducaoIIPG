@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 from io import BytesIO
+import os
 
 # URL do arquivo XLSX no GitHub
 url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/Produção IIPG.xlsx'
