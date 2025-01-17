@@ -130,9 +130,14 @@ def update_charts(selected_month, selected_unit):
         hover_data={'Obs Primário': True}
     )
     fig_line.update_layout(
-        xaxis_title='Período',
+        xaxis_title=f'{selected_month}',
         yaxis_title='Produção (ton.)',
-        legend_title='Legenda'
+        legend_title='Legenda',
+        xaxis=dict(
+            tickmode='linear',
+            dtick='D1',
+            tickformat='%d'
+        )
     )
     
     # Gráfico de linha Acumulado Primário
@@ -145,8 +150,13 @@ def update_charts(selected_month, selected_unit):
     )
     fig_acum.update_traces(line=dict(color='#FFCC00'))
     fig_acum.update_layout(
-        xaxis_title='Período',
-        yaxis_title='Produção Acumulada (ton.)'
+        xaxis_title=f'{selected_month}',
+        yaxis_title='Produção Acumulada (ton.)',
+        xaxis=dict(
+            tickmode='linear',
+            dtick='D1',
+            tickformat='%d'
+        )
     )
 
     # Gráfico de barras horizontais
@@ -208,9 +218,14 @@ def update_charts(selected_month, selected_unit):
         hover_data={'Obs Secundário': True}
     )
     fig_line2.update_layout(
-        xaxis_title='Período',
+        xaxis_title=f'{selected_month}',
         yaxis_title='Produção (ton.)',
-        legend_font_size=14
+        legend_font_size=14,
+        xaxis=dict(
+            tickmode='linear',
+            dtick='D1',
+            tickformat='%d'
+        )
     )
     
     # Gráfico de linha para USA e USS
@@ -243,9 +258,14 @@ def update_charts(selected_month, selected_unit):
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='BGS'))
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='BGTC'))
     fig_usa_uss.update_layout(
-        xaxis_title='Período',
+        xaxis_title=f'{selected_month}',
         yaxis_title='Produção (ton.)',
-        legend_font_size=14
+        legend_font_size=14,
+        xaxis=dict(
+            tickmode='linear',
+            dtick='D1',
+            tickformat='%d'
+        )
     )
     
     return fig_line, fig_acum, fig_bar, fig_pie, fig_line2, fig_usa_uss
