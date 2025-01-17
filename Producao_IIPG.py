@@ -130,13 +130,13 @@ def update_charts(selected_month, selected_unit):
         hover_data={'Obs Primário': True}
     )
     fig_line.update_layout(
-        xaxis_title=f'{selected_month}',
+        xaxis_title='Data',
         yaxis_title='Produção (ton.)',
         legend_title='Legenda',
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
-            tickformat='%d'
+            tickformat='%d-%m'
         )
     )
     
@@ -150,12 +150,12 @@ def update_charts(selected_month, selected_unit):
     )
     fig_acum.update_traces(line=dict(color='#FFCC00'))
     fig_acum.update_layout(
-        xaxis_title=f'{selected_month}',
+        xaxis_title='Data',
         yaxis_title='Produção Acumulada (ton.)',
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
-            tickformat='%d'
+            tickformat='%d-%m'
         )
     )
 
@@ -218,13 +218,13 @@ def update_charts(selected_month, selected_unit):
         hover_data={'Obs Secundário': True}
     )
     fig_line2.update_layout(
-        xaxis_title=f'{selected_month}',
+        xaxis_title='Data',
         yaxis_title='Produção (ton.)',
         legend_font_size=14,
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
-            tickformat='%d'
+            tickformat='%d-%m'
         )
     )
     
@@ -258,13 +258,13 @@ def update_charts(selected_month, selected_unit):
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='BGS'))
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='BGTC'))
     fig_usa_uss.update_layout(
-        xaxis_title=f'{selected_month}',
+        xaxis_title='Data',
         yaxis_title='Produção (ton.)',
         legend_font_size=14,
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
-            tickformat='%d'
+            tickformat='%d-%m'
         )
     )
     
