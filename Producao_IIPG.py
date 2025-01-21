@@ -119,7 +119,7 @@ def update_charts(selected_month, selected_unit):
         'Brita 2': '#FFCC00'
     }
 
-    filtered_df.rename(columns= {'obs Primário': 'Obs'})
+    filtered_df.rename(columns= {'obs Primário': 'Obs'}, inplace= True)
     
     # Gráfico de linha primário
     fig_line = px.line(
@@ -205,7 +205,7 @@ def update_charts(selected_month, selected_unit):
     melted_line2_df = line2_df.melt(id_vars=['Dias', 'Obs Secundário'], value_vars=['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2'], 
                                     var_name='Material', value_name='Produção (ton.)')
 
-    melted_line2_df.rename(columns= {'Obs Secundário': 'Obs'})
+    melted_line2_df.rename(columns= {'Obs Secundário': 'Obs'}, inplace= True)
     
     # Criando o gráfico de linha
     fig_line2 = px.line(
