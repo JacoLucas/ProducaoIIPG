@@ -118,6 +118,8 @@ def update_charts(selected_month, selected_unit):
         'Brita 1': '#990033',
         'Brita 2': '#FFCC00'
     }
+
+    filtered_df.rename(columns= 'obs Primário': 'Obs')
     
     # Gráfico de linha primário
     fig_line = px.line(
@@ -127,7 +129,7 @@ def update_charts(selected_month, selected_unit):
         title=f'Produção Diária - {selected_month}', 
         line_shape='linear',
         color_discrete_map=colors,
-        hover_data={'Obs Primário': True}
+        hover_data={'Obs': True}
     )
     fig_line.update_layout(
         xaxis_title=f'{selected_month}',
@@ -203,9 +205,8 @@ def update_charts(selected_month, selected_unit):
     melted_line2_df = line2_df.melt(id_vars=['Dias', 'Obs Secundário'], value_vars=['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2'], 
                                     var_name='Material', value_name='Produção (ton.)')
 
-    # Verifica o DataFrame resultante
-    print('melted_line2_df\n', melted_line2_df)
-
+    melted_line2_df.rename(columns= 'Obs Secundário': 'Obs')
+    
     # Criando o gráfico de linha
     fig_line2 = px.line(
         melted_line2_df, 
@@ -215,7 +216,7 @@ def update_charts(selected_month, selected_unit):
         title=f'Produção Diária - {selected_month}', 
         line_shape='linear', 
         color_discrete_map=color_map,
-        hover_data={'Obs Secundário': True}
+        hover_data={'Obs': True}
     )
     fig_line2.update_layout(
         xaxis_title=f'{selected_month}',
