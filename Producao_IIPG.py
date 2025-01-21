@@ -119,7 +119,7 @@ def update_charts(selected_month, selected_unit):
         'Brita 2': '#FFCC00'
     }
 
-    filtered_df.rename(columns= {'obs Primário': 'Obs'}, inplace= True)
+    filtered_df.rename(columns= {'Obs Primário': 'Obs'}, inplace= True)
     
     # Gráfico de linha primário
     fig_line = px.line(
