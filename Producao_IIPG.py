@@ -7,6 +7,9 @@ import requests
 from io import BytesIO
 import os
 
+# URL direta para a imagem no GitHub
+image_url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/LOGO MLC Infra.jpg'
+
 # URL do arquivo XLSX no GitHub
 url = 'https://github.com/JacoLucas/ProducaoIIPG/raw/main/Produção IIPG.xlsx'
 
@@ -49,6 +52,9 @@ app = dash.Dash(__name__)
 app.title = 'Produção IIPG'
 
 app.layout = html.Div([
+    html.Div([
+        html.Img(src=image_url, style={'position': 'absolute', 'top': '10px', 'right': '10px', 'width': '220px', 'height': '180px'})
+    ]),
     html.H1('Produção IIPG - Inst. Ind. Ponta Grossa'),
 
     ######### ATUALIZAR SEMPRE #########
