@@ -260,7 +260,7 @@ def update_charts(selected_month, selected_unit):
             tickformat='%d'
         ),
         yaxis=dict(
-            range=[0, max(melted_line2_df[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']].max()) + 5]
+            range=[0, max(melted_line2_df[['Produção (ton.)']].max()) + 5]
         )
     )
     
@@ -274,8 +274,7 @@ def update_charts(selected_month, selected_unit):
             y='Produção (ton.)',
             color='Material',
             title=f'Produção Diária - USA {selected_month}',
-            labels={'value': 'Produção (ton.)', 'variable': 'Material'},
-            hover_data={'Obs USA': True}
+            labels={'value': 'Produção (ton.)', 'variable': 'Material'}
         )
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='CBUQ'))
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='Binder'))
@@ -288,8 +287,7 @@ def update_charts(selected_month, selected_unit):
             y='Produção (ton.)',
             color='Material',
             title=f'Produção Diária - USS {selected_month}',
-            labels={'value': 'Produção (ton.)', 'variable': 'Material'},
-            hover_data={'Obs USS': True}
+            labels={'value': 'Produção (ton.)', 'variable': 'Material'}
         )
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='BGS'))
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='BGTC'))
@@ -315,7 +313,7 @@ def update_charts(selected_month, selected_unit):
             tickformat='%d'
         ),
         yaxis=dict(
-            range=[0, max(usa_uss_data[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']].max()) + 5]
+            range=[0, max(usa_uss_data[['Produção (ton.)']].max()) + 5]
         )
     )
     
