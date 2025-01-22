@@ -59,7 +59,7 @@ app.layout = html.Div([
     html.H1('Produção IIPG - Inst. Ind. Ponta Grossa'),
 
     ######### ATUALIZAR SEMPRE #########
-    html.H3('Atualizado dia 17/01/25 - 15:01'), 
+    html.H3('Atualizado dia 22/01/25 - 14:07'), 
     ######### ATUALIZAR SEMPRE #########
     
     html.Div([
