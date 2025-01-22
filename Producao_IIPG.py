@@ -159,7 +159,7 @@ def update_charts(selected_month, selected_unit):
             tickformat='%d'
         ),
         yaxis=dict(
-            range=[0, max(filtered_df[['Rocha Detonada', 'Macadame']].max()) + 5]
+            range=[0, max(filtered_df[['Produção Primário', 'Produção Média']].max()) + 5]
         )
     )
     
