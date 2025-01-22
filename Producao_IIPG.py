@@ -134,17 +134,31 @@ def update_charts(selected_month, selected_unit):
         y=['Produção Primário', 'Produção Média'],
         title=f'Produção Diária - {selected_month}', 
         line_shape='linear',
-        color_discrete_map=colors,
-        hover_data={'Obs': True}
+        color_discrete_map=colors
     )
+    # Adicionando scatter plot para os pontos onde Obs != 0
+    scatter_points = go.Scatter(
+        x=filtered_df[filtered_df['Obs'] != 0]['Dias'],
+        y=[0] * len(filtered_df[filtered_df['Obs'] != 0]),
+        mode='markers',
+        name='Observação',
+        marker=dict(color='red', size=10),
+        text=filtered_df[filtered_df['Obs'] != 0]['Obs'],
+        textposition='top center',
+        hovertext=filtered_df[filtered_df['Obs'] != 0]['Obs']
+    )
+
+    # Atualizando o layout do gráfico
+    fig_line.add_trace(scatter_points)
     fig_line.update_layout(
         xaxis_title=f'{selected_month}',
-        yaxis_title='Produção (ton.)',
-        legend_title='Legenda',
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
             tickformat='%d'
+        ),
+        yaxis=dict(
+            range=[0, max(filtered_df[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']].max()) + 5]
         )
     )
     
@@ -221,24 +235,38 @@ def update_charts(selected_month, selected_unit):
         color='Material',
         title=f'Produção Diária - {selected_month}', 
         line_shape='linear', 
-        color_discrete_map=color_map,
-        hover_data={'Obs': True}
+        color_discrete_map=color_map
     )
+    # Adicionando scatter plot para os pontos onde Obs != 0
+    scatter_points = go.Scatter(
+        x=melted_line2_df[melted_line2_df['Obs'] != 0]['Dias'],
+        y=[0] * len(melted_line2_df[melted_line2_df['Obs'] != 0]),
+        mode='markers',
+        name='Observação',
+        marker=dict(color='red', size=10),
+        text=melted_line2_df[melted_line2_df['Obs'] != 0]['Obs'],
+        textposition='top center',
+        hovertext=melted_line2_df[melted_line2_df['Obs'] != 0]['Obs']
+    )
+
+    # Atualizando o layout do gráfico
+    fig_line2.add_trace(scatter_points)
     fig_line2.update_layout(
         xaxis_title=f'{selected_month}',
-        yaxis_title='Produção (ton.)',
-        legend_font_size=14,
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
             tickformat='%d'
+        ),
+        yaxis=dict(
+            range=[0, max(melted_line2_df[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']].max()) + 5]
         )
     )
     
     # Gráfico de linha para USA e USS
     if selected_unit == 'USA':
         usa_uss_data = filtered_df.melt(id_vars=['Dias'], value_vars=['CBUQ', 'Binder'], var_name='Material', value_name='Produção (ton.)')
-        usa_uss_data['Obs USA'] = df['Obs USA']
+        usa_uss_data['Obs'] = df['Obs USA']
         fig_usa_uss = px.line(
             usa_uss_data,
             x='Dias',
@@ -252,7 +280,7 @@ def update_charts(selected_month, selected_unit):
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='Binder'))
     else:
         usa_uss_data = filtered_df.melt(id_vars=['Dias'], value_vars=['BGS', 'BGTC'], var_name='Material', value_name='Produção (ton.)')
-        usa_uss_data['Obs USS'] = df['Obs USS']
+        usa_uss_data['Obs'] = df['Obs USS']
         fig_usa_uss = px.line(
             usa_uss_data,
             x='Dias',
@@ -264,14 +292,29 @@ def update_charts(selected_month, selected_unit):
         )
         fig_usa_uss.update_traces(line=dict(color='#006699'), selector=dict(name='BGS'))
         fig_usa_uss.update_traces(line=dict(color='#FFCC00'), selector=dict(name='BGTC'))
+    # Adicionando scatter plot para os pontos onde Obs != 0
+    scatter_points = go.Scatter(
+        x=usa_uss_data[usa_uss_data['Obs'] != 0]['Dias'],
+        y=[0] * len(usa_uss_data[usa_uss_data['Obs'] != 0]),
+        mode='markers',
+        name='Observação',
+        marker=dict(color='red', size=10),
+        text=usa_uss_data[usa_uss_data['Obs'] != 0]['Obs'],
+        textposition='top center',
+        hovertext=usa_uss_data[usa_uss_data['Obs'] != 0]['Obs']
+    )
+
+    # Atualizando o layout do gráfico
+    fig_usa_uss.add_trace(scatter_points)
     fig_usa_uss.update_layout(
         xaxis_title=f'{selected_month}',
-        yaxis_title='Produção (ton.)',
-        legend_font_size=14,
         xaxis=dict(
             tickmode='linear',
             dtick='D1',
             tickformat='%d'
+        ),
+        yaxis=dict(
+            range=[0, max(usa_uss_data[['Pó de Pedra', 'Pedrisco', 'Brita 1', 'Brita 2']].max()) + 5]
         )
     )
     
