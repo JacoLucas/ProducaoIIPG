@@ -152,6 +152,7 @@ def update_charts(selected_month, selected_unit):
     # Atualizando o layout do gráfico
     fig_line.add_trace(scatter_points)
     fig_line.update_layout(
+        yaxis_title='Produção (ton.)'
         xaxis_title=f'{selected_month}',
         xaxis=dict(
             tickmode='linear',
